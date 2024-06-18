@@ -6,7 +6,11 @@ pipeline {
      stages {
         stage('Test') {
             steps {
+                sh 'pwd'
+                sh 'ls altr'
                 dir('shopping-cart') {
+                    sh 'pwd'
+                    sh 'ls -altr'
                     sh 'mvn clean test'
                 }
             }
