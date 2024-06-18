@@ -59,7 +59,7 @@ objects:
       postCommit: {}
       resources: {}
       source:
-        contextDir: shopping-cart
+        contextDir: DO400-apps-solutions/shopping-cart
         git:
           ref: ${GIT_REF}
           uri: ${GIT_REPOSITORY}
