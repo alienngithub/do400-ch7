@@ -28,7 +28,7 @@ pipeline {
      stage('Security Scan') {
         steps {
             dir('DO400-apps-solutions/shopping-cart') {
-                sh " cat kubefiles/security-scan-template"
+                sh " cat kubefiles/security-scan-template.yml"
                 sh """
                  oc process -f kubefiles/security-scan-template.yml \
                  -n ${APP_NAMESPACE} \
