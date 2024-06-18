@@ -1,0 +1,36 @@
+pipeline {
+
+    agent {node { label 'maven'}}
+     tools {maven "maven"}
+     environment { APP_NAMESPACE = 'xudlbs-security-scans'}
+     stages {
+        stage('Test') {
+            steps {
+                dir('do400-apps-solutions/shopping-cart') {
+                    sh 'mvn clean test'
+                }
+            }
+        }
+     
+     stage('Image build') {
+        steps {
+            dir('do400-apps-solutions/shopping-cart') {
+                sh """
+                oc start-build security-scans --follow --wait -n ${APP_NAMESPACE}
+                """
+            }
+        }
+     }
+     stage('Deploy') {
+        steps {
+            dir('do400-apps-solutions/shopping-cart') {
+                sh """
+                oc patch deployment security-scans \
+                -p '{"spec": {"template": {"metadata": {"labels": {"build": "build-${BUILD_NUMBER}"}}}}}' \
+                -n ${APP_NAMESPACE}
+                """
+                }
+            }
+        }
+     }
+}
