@@ -32,7 +32,7 @@ pipeline {
             sh " pwd"
            sh "ls -altr"
            sh " ls -altr kubefiles;"
-          sh ""  cat kubefiles/security-scan-template.yml"    
+          sh "  cat kubefiles/security-scan-template.yml"    
                 sh """
 oc process -f kubefiles/security-scan-template.yml -p PROJECT_NAME=xudlbs-security-scans -p CVE_CODE=CVE-2020-14583 > tmp.txt
 """
