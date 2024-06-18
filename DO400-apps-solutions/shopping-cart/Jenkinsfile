@@ -29,13 +29,14 @@ pipeline {
         steps {
             dir('DO400-apps-solutions/shopping-cart') {
                 
-            sh "
-            pwd;
-            ls -altr;
-            ls -altr kubefiles;
-            cat kubefiles/security-scan-template.yml"    
+            sh " pwd"
+           sh "ls -altr"
+           sh " ls -altr kubefiles;"
+          sh ""  cat kubefiles/security-scan-template.yml"    
                 sh """
 oc process -f kubefiles/security-scan-template.yml -p PROJECT_NAME=xudlbs-security-scans -p CVE_CODE=CVE-2020-14583 > tmp.txt
+"""
+sh """
 oc replace --force -n xudlbs-security-scans -f tmp.txt 
                 """
                 sh "! ../tools/check-job-state.sh security-scans-trivy ${APP_NAMESPACE}"
