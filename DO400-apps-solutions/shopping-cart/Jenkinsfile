@@ -34,8 +34,8 @@ pipeline {
            sh " ls -altr kubefiles;"
           sh "  cat kubefiles/security-scan-template.yml"    
                 sh """
-oc process -- local -f kubefiles/security-scan-template.yml -p PROJECT_NAME=xudlbs-security-scans \
--p CVE_CODE=CVE-2020-14583 | oc replace --force -n xudlbs-security-scans -f - 
+oc process --local -f kubefiles/security-scan-template.yml -p PROJECT_NAME=xudlbs-security-scans \
+ -p CVE_CODE=CVE-2020-14583 | oc replace --force -n xudlbs-security-scans -f -
                 """
                 sh "! ../tools/check-job-state.sh security-scans-trivy ${APP_NAMESPACE}"
             }
