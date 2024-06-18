@@ -6,7 +6,7 @@ pipeline {
      stages {
         stage('Test') {
             steps {
-                dir('do400-apps-solutions/shopping-cart') {
+                dir('shopping-cart') {
                     sh 'mvn clean test'
                 }
             }
@@ -14,7 +14,7 @@ pipeline {
      
      stage('Image build') {
         steps {
-            dir('do400-apps-solutions/shopping-cart') {
+            dir('shopping-cart') {
                 sh """
                 oc start-build security-scans --follow --wait -n ${APP_NAMESPACE}
                 """
@@ -23,7 +23,7 @@ pipeline {
      }
      stage('Deploy') {
         steps {
-            dir('do400-apps-solutions/shopping-cart') {
+            dir('shopping-cart') {
                 sh """
                 oc patch deployment security-scans \
                 -p '{"spec": {"template": {"metadata": {"labels": {"build": "build-${BUILD_NUMBER}"}}}}}' \
