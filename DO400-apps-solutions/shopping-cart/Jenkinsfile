@@ -8,7 +8,7 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh 'ls -altr'
-                dir('shopping-cart') {
+                dir('DO400-apps-solutions/shopping-cart') {
                     sh 'pwd'
                     sh 'ls -altr'
                     sh 'mvn clean test'
@@ -18,7 +18,7 @@ pipeline {
      
      stage('Image build') {
         steps {
-            dir('shopping-cart') {
+            dir('DO400-apps-solutions/shopping-cart') {
                 sh """
                 oc start-build security-scans --follow --wait -n ${APP_NAMESPACE}
                 """
@@ -27,7 +27,7 @@ pipeline {
      }
      stage('Deploy') {
         steps {
-            dir('shopping-cart') {
+            dir('DO400-apps-solutions/shopping-cart') {
                 sh """
                 oc patch deployment security-scans \
                 -p '{"spec": {"template": {"metadata": {"labels": {"build": "build-${BUILD_NUMBER}"}}}}}' \
