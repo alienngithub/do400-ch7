@@ -3,7 +3,7 @@ pipeline {
      tools {nodejs "nodejs"}
 
     // Set your OCP project
-    environment { APP_NAMESPACE = '...' }
+    environment { APP_NAMESPACE = 'xudlbs-metrics' }
 
     stages{
 
