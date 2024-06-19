@@ -7,8 +7,10 @@ pipeline {
 
     stages{
         stage('Check') {
+            steps {
             sh " pwd "
             sh " ls -altr DO400-apps-solutions/greeting-cd-pipeline"
+            }
         } 
 
         stage('Test') {
