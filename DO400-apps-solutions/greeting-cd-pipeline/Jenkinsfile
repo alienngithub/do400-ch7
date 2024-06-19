@@ -6,8 +6,12 @@ pipeline {
     environment { APP_NAMESPACE = 'xudlbs-metrics' }
 
     stages{
+        stage('Check') {
+            sh " pwd "
+            sh " ls -altr DO400-apps-solutions/greeting-cd-pipeline"
+        } 
 
-        stage('Test'){
+        stage('Test') {
             steps {
                 dir('DO400-apps-solutions/greeting-cd-pipeline')
                 sh "node test.js"
