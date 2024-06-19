@@ -1,5 +1,6 @@
 pipeline {
     agent { label 'nodejs' }
+     tools {nodejs "nodejs"}
 
     // Set your OCP project
     environment { APP_NAMESPACE = '...' }
@@ -8,8 +9,18 @@ pipeline {
 
         stage('Test'){
             steps {
+                dir('DO400-apps-solutions/greeting-cd-pipeline')
                 sh "node test.js"
             }
+        }
+        stage('Deploy') {
+            steps {
+                sh '''
+                    oc start-build greeting-metrics \
+                    --follow --wait -n xudlbs-metrics
+                '''
+            }
+
         }
 
         // Add more stages here
