@@ -3,7 +3,7 @@ pipeline {
      tools {nodejs "nodejs"}
 
     // Set your OCP project
-    environment { APP_NAMESPACE = 'xudlbs-metrics' }
+    //environment { APP_NAMESPACE = 'xudlbs-metrics' }
 
     stages{
         stage('Check') {
@@ -15,8 +15,10 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('DO400-apps-solutions/greeting-cd-pipeline')
+
+                dir('DO400-apps-solutions/greeting-cd-pipeline') {
                 sh "node test.js"
+                }
             }
         }
         stage('Deploy') {
