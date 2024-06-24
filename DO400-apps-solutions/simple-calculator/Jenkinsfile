@@ -1,0 +1,37 @@
+pipeline {
+    agent { label 'maven' }
+     tools {maven "maven"}
+     options { skipDefaultCheckout true}
+    // Set your OCP project
+    //environment { APP_NAMESPACE = 'xudlbs-metrics' }
+
+    stages{
+        stage('Checkout') {
+            steps {
+            git branch: 'notifications',
+            url: 'https://github.com/alienngithub/do400-ch7'
+            
+            }
+        } 
+
+        stage('Test') {
+            steps {
+
+                dir('DO400-apps-solutions/simple-calculator') {
+                sh 'mvn clean test'
+                }
+            }
+        }
+       // stage('Deploy') {
+         //   steps {
+           //     sh '''
+             //       oc start-build greeting-metrics \
+               //     --follow --wait -n xudlbs-metrics
+               // '''
+           // }
+
+       // }
+
+        // Add more stages here
+    }
+}
