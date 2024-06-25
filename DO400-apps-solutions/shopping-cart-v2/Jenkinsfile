@@ -35,7 +35,7 @@ pipeline {
 
         // Add more stages here
     }
-    }
+    
     post {
         failure {
             sendFailureAlert('team@example.com')
