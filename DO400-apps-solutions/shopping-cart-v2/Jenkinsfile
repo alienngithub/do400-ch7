@@ -25,14 +25,18 @@ pipeline {
             }
 
         }
-       //stage('Check style') {
-         //steps 
-        //{
-          //      dir('DO400-apps-solutions/simple-calculator') {
-            //    sh 'mvn clean checkstyle:check'
-            //}
+       stage('Build Image') {
+        environment { QUAY = credentials('QUAY_USER')}
+         steps 
+        {
+                dir('DO400-apps-solutions/shopping-cart-v2') {
+              sh './scripts/include-container-extensions.sh'
+              sh '''
+                   ./scripts/build-and-push-image.sh -u $QUAY_USR -p $QUAY_PSW -b $BUILD_NUMBER
+              '''
+            }
 
-       //}
+       }
 
         // Add more stages here
     }
