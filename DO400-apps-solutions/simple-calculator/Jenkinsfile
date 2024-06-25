@@ -8,6 +8,7 @@ pipeline {
     stages{
         stage('Checkout') {
             steps {
+            sendNotification('started', 'team@example.com')    
             git branch: 'notifications',
             url: 'https://github.com/alienngithub/do400-ch7'
             
@@ -21,10 +22,13 @@ pipeline {
                 sh 'mvn clean test'
                 }
             }
+
         }
        // stage('Deploy') {
-         //   steps {
+         //   steps 
+         {
            //     sh '''
+
              //       oc start-build greeting-metrics \
                //     --follow --wait -n xudlbs-metrics
                // '''
@@ -34,4 +38,10 @@ pipeline {
 
         // Add more stages here
     }
+}
+
+void sendNotification(String action, String email) {
+    mail to: "${email}",
+    subject: "Pipeline ${action}: ${currentBuild.fullDisplayName}",
+    body "The following pipeline ${action}: ${env.BUILD_URL}"
 }
