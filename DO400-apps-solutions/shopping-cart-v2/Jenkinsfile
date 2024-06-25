@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'maven' }
      tools {maven "maven"}
-     options { skipDefaultCheckout true}
+     
     // Set your OCP project
     environment { APP_NAMESPACE = 'xudlbs-recover' }
 
