@@ -38,6 +38,11 @@ pipeline {
 
         // Add more stages here
     }
+    post {
+        always {
+            sendNotification('finished', 'team@example.com')
+        }
+    }
 }
 
 void sendNotification(String action, String email) {
