@@ -1,0 +1,58 @@
+pipeline {
+    agent { label 'maven' }
+     tools {maven "maven"}
+     options { skipDefaultCheckout true}
+    // Set your OCP project
+    environment { APP_NAMESPACE = 'xudlbs-recover' }
+
+    stages{
+     //   stage('Checkout') {
+          //  steps {
+           // sendNotification('started', 'team@example.com')    
+          //  git branch: 'notifications',
+          //  url: 'https://github.com/alienngithub/do400-ch7'
+            
+          //  }
+     //   } 
+
+        stage('Test') {
+            steps {
+
+                dir('DO400-apps-solutions/shopping-cart-v2') {
+                sh 'mvn clean test'
+                }
+            }
+
+        }
+       //stage('Check style') {
+         //steps 
+        //{
+          //      dir('DO400-apps-solutions/simple-calculator') {
+            //    sh 'mvn clean checkstyle:check'
+            //}
+
+       //}
+
+        // Add more stages here
+    }
+    }
+    post {
+        failure {
+            sendFailureAlert('team@example.com')
+        }
+        always {
+            sendNotification('finished', 'team@example.com')
+        }
+    }
+}
+
+void sendNotification(String action, String email) {
+    mail to: "${email}",
+    subject: "Pipeline ${action}: ${currentBuild.fullDisplayName}",
+    body: "The following pipeline ${action}: ${env.BUILD_URL}"
+}
+void sendFailureAlert(String email) {
+    mail to: "${email}",
+    subject: "Pipeline failed: ${currentBuild.fullDisplayName}",
+    body: "The following pipeline failed: ${env.BUILD_URL}"
+}
